@@ -3,12 +3,25 @@ import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from
 import { MessageCircle, ShieldCheck, Truck, Sparkles, Search, X, Instagram, ChevronLeft, ChevronRight, ChevronDown, Star, ShoppingBag, Plus, Minus, Trash2 } from 'lucide-react'
 import { useProducts } from '../hooks'
 import { img } from '../cloudinary'
-import { TRUST, STEPS, REVIEWS, FAQ, CURRENCY, INSTAGRAM, waLink, orderMessage, cartMessage, stockOf, isSold } from '../config'
+import { TRUST, STEPS, REVIEWS, FAQ, CURRENCY, INSTAGRAM, OFFER_LABEL, waLink, orderMessage, cartMessage, stockOf, isSold, offerOf } from '../config'
 
 const ICONS = { shield: ShieldCheck, truck: Truck, chat: MessageCircle, sparkles: Sparkles }
 const fmt = (n) => `${CURRENCY}${Number(n).toLocaleString('en-IN')}`
 const discount = (p) => (p.oldPrice > p.price ? Math.round(((p.oldPrice - p.price) / p.oldPrice) * 100) : 0)
 const ease = [0.22, 1, 0.36, 1]
+
+function Price({ p, lg }) {
+  const off = discount(p)
+  return (
+    <div className={`price ${lg ? 'lg' : ''}`}>
+      {off > 0 && <span className="offer"><Sparkles size={lg ? 14 : 12} /> {offerOf(p)}</span>}
+      <div className="amt">
+        <b>{fmt(p.price)}</b>
+        {off > 0 && <><s>MRP {fmt(p.oldPrice)}</s><em className="save">{off}% off</em></>}
+      </div>
+    </div>
+  )
+}
 
 function Nav({ count, onCart }) {
   return (
@@ -16,7 +29,7 @@ function Nav({ count, onCart }) {
       <a href="#top" className="brand"><img src="/logo-circle.png" alt="The Excessory Studio" /></a>
       <nav>
         <a href="#shop">Shop</a><a href="#how">How it works</a><a href="#faq">Questions</a>
-        <a className="btn btn-sm btn-light" href={waLink('Hi The Excessory Studio! 👋')} target="_blank" rel="noreferrer">
+        <a className="btn btn-sm" href={waLink('Hi The Excessory Studio! 👋')} target="_blank" rel="noreferrer">
           <MessageCircle size={16} /> Chat with us
         </a>
         <button className="cart-btn" onClick={onCart} aria-label={`Open cart, ${count} items`}>
@@ -39,7 +52,7 @@ function HeroCard({ p, i, mx, my, onOpen }) {
         <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 + i * 0.15, duration: 0.9, ease }}>
           <button className="glass hcard" onClick={() => onOpen(p)} aria-label={`View ${p.name}`}>
             <img src={img(p.images[0], 500)} alt={p.name} />
-            <span className="cap"><b>{p.name}</b><i>{fmt(p.price)}</i></span>
+            <span className="cap"><b>{p.name}</b><i>{fmt(p.price)}{discount(p) > 0 && <s>{fmt(p.oldPrice)}</s>}</i></span>
           </button>
         </motion.div>
       </motion.div>
@@ -74,19 +87,25 @@ function HeroStack({ items, loading, onOpen }) {
 
 function Hero({ products, loading, onOpen }) {
   const feat = products.filter((p) => p.images?.length && !isSold(p)).slice(0, 3)
+  const best = Math.max(0, ...products.filter((p) => !isSold(p)).map(discount))
   const line = (t, d) => (
     <span className="ln"><motion.span initial={{ y: '112%' }} animate={{ y: 0 }} transition={{ delay: d, duration: 1, ease }}>{t}</motion.span></span>
   )
   return (
     <section className="hero" id="top">
       <div className="hero-copy">
-        <h1>{line('Accessories you’ll', 0.1)}{line('reach for every day.', 0.22)}</h1>
+        {best > 0 && (
+          <motion.a href="#shop" className="eyebrow" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.7 }}>
+            <Sparkles size={14} /> {OFFER_LABEL} · up to {best}% off
+          </motion.a>
+        )}
+        <h1>{line('Accessories you’ll', 0.1)}{line(<>reach for <span className="hl">every day.</span></>, 0.22)}</h1>
         <motion.p className="sub" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6, duration: 0.8 }}>
           Browse, tap Order now, and we confirm everything with you on WhatsApp.
         </motion.p>
         <motion.div className="hero-cta" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8, duration: 0.8 }}>
-          <a href="#shop" className="btn btn-light">Shop the collection</a>
-          <a href="#how" className="btn btn-ghost">How ordering works</a>
+          <a href="#shop" className="btn">Shop the collection</a>
+          <a href="#how" className="btn btn-outline">How ordering works</a>
         </motion.div>
       </div>
       <HeroStack items={feat} loading={loading} onOpen={onOpen} />
@@ -131,14 +150,14 @@ function Card({ p, onOpen, onAdd, qty, onQty }) {
       <button className="card-img" onClick={() => onOpen(p)} aria-label={`View ${p.name}`}>
         <img src={img(p.images?.[0], 600)} alt={p.name} loading="lazy" />
         {p.images?.[1] && <img className="alt" src={img(p.images[1], 600)} alt="" loading="lazy" />}
-        {discount(p) > 0 && <span className="tag">{discount(p)}% off</span>}
         {sold && <span className="tag dark">Sold out</span>}
       </button>
       <div className="card-body">
         <span className="cat">{p.category}</span>
         <h3 onClick={() => onOpen(p)}>{p.name}</h3>
+        <Price p={p} />
+        {low && <em className="low">Only {stock} left</em>}
         <div className="buy">
-          <div className="price">{fmt(p.price)}{p.oldPrice > p.price && <s>{fmt(p.oldPrice)}</s>}{low && <em className="low">Only {stock} left</em>}</div>
           {sold
             ? <button className="btn btn-sm" disabled>Sold out</button>
             : qty > 0
@@ -178,7 +197,7 @@ function Modal({ p, onClose, onAdd, qty, onQty }) {
         <div className="info">
           <span className="cat">{p.category}</span>
           <h2>{p.name}</h2>
-          <div className="price lg">{fmt(p.price)}{p.oldPrice > p.price && <s>{fmt(p.oldPrice)}</s>}</div>
+          <Price p={p} lg />
           {low && <span className="low">Only {stock} left</span>}
           <p className="desc">{p.description}</p>
           <ul className="mini-trust"><li><ShieldCheck size={16} /> Quality checked</li><li><Truck size={16} /> Careful packaging</li><li><MessageCircle size={16} /> Real person on WhatsApp</li></ul>
@@ -215,7 +234,7 @@ function Faq() {
   )
 }
 
-function CartDrawer({ lines, total, onClose, setQty, clear }) {
+function CartDrawer({ lines, total, saved, onClose, setQty, clear }) {
   useEffect(() => {
     const k = (e) => e.key === 'Escape' && onClose()
     document.body.style.overflow = 'hidden'; window.addEventListener('keydown', k)
@@ -241,7 +260,7 @@ function CartDrawer({ lines, total, onClose, setQty, clear }) {
                   <img src={img(p.images?.[0], 160)} alt={p.name} />
                   <div className="cl-info">
                     <b>{p.name}</b>
-                    <span>{isSold(p) ? 'Sold out — not included in your order' : fmt(p.price)}</span>
+                    <span>{isSold(p) ? 'Sold out — not included in your order' : <>{fmt(p.price)}{discount(p) > 0 && <s>{fmt(p.oldPrice)}</s>}</>}</span>
                     <div className="cl-row">
                       <div className="qty">
                         <button onClick={() => setQty(p.id, qty - 1)} aria-label="Decrease quantity"><Minus size={14} /></button>
@@ -256,10 +275,11 @@ function CartDrawer({ lines, total, onClose, setQty, clear }) {
             </AnimatePresence>
           </div>
           <div className="dr-foot">
+            {saved > 0 && <div className="saved"><span><Sparkles size={14} /> {OFFER_LABEL} savings</span><b>−{fmt(saved)}</b></div>}
             <div className="total"><span>Total</span><b>{fmt(total)}</b></div>
             <p className="note">Delivery and payment are confirmed with you on WhatsApp.</p>
             {live.length > 0
-              ? <a className="btn btn-block btn-lg" href={waLink(cartMessage(live, total))} target="_blank" rel="noreferrer"><MessageCircle size={19} /> Send order on WhatsApp</a>
+              ? <a className="btn btn-block btn-lg" href={waLink(cartMessage(live, total, saved))} target="_blank" rel="noreferrer"><MessageCircle size={19} /> Send order on WhatsApp</a>
               : <button className="btn btn-block btn-lg" disabled>Nothing available to order</button>}
             <button className="clear" onClick={clear}>Clear cart</button>
           </div>
@@ -291,6 +311,7 @@ export default function Store() {
 
   const lines = useMemo(() => cart.map((c) => ({ p: products.find((p) => p.id === c.id), qty: c.qty })).filter((l) => l.p), [cart, products])
   const total = lines.reduce((n, l) => (isSold(l.p) ? n : n + l.p.price * l.qty), 0)
+  const saved = lines.reduce((n, l) => (isSold(l.p) || !(l.p.oldPrice > l.p.price) ? n : n + (l.p.oldPrice - l.p.price) * l.qty), 0)
   const count = cart.reduce((n, c) => n + c.qty, 0)
   const livePick = open && (products.find((p) => p.id === open.id) || open)
   const flash = (m) => { setNote(m); clearTimeout(timer.current); timer.current = setTimeout(() => setNote(null), 2800) }
@@ -344,7 +365,7 @@ export default function Store() {
 
       <section className="how" id="how">
         <div className="how-in">
-          <h2 className="title light">How ordering works</h2>
+          <h2 className="title">How ordering works</h2>
           <div className="steps">{STEPS.map((s, i) => (
             <div key={i} className="step glass"><span>{s.n}</span><h4>{s.title}</h4><p>{s.text}</p></div>))}
           </div>
@@ -385,7 +406,7 @@ export default function Store() {
       </motion.a>
 
       <AnimatePresence>{open && <Modal p={livePick} qty={qtyOf(open.id)} onQty={(q) => setQty(open.id, q)} onClose={() => setOpen(null)} onAdd={add} />}</AnimatePresence>
-      <AnimatePresence>{cartOpen && <CartDrawer lines={lines} total={total} onClose={() => setCartOpen(false)} setQty={setQty} clear={() => setCart([])} />}</AnimatePresence>
+      <AnimatePresence>{cartOpen && <CartDrawer lines={lines} total={total} saved={saved} onClose={() => setCartOpen(false)} setQty={setQty} clear={() => setCart([])} />}</AnimatePresence>
       <AnimatePresence>
         {note && (
           <motion.div className="toast" initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ opacity: 0 }}>
