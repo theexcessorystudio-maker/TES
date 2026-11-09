@@ -1,0 +1,33 @@
+.google {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 22px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-line-strong);
+  background: var(--color-white);
+  color: var(--color-ink);
+  font-weight: 500;
+  transition:
+    background var(--duration-base) var(--ease),
+    box-shadow var(--duration-base) var(--ease),
+    transform var(--duration-base) var(--ease);
+}
+
+.google:hover:not(:disabled) {
+  background: var(--color-mist);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-rest);
+}
+
+.google:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.compact {
+  padding: 9px 16px;
+  font-size: var(--text-sm);
+  gap: 8px;
+}

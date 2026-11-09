@@ -1,0 +1,6 @@
+.skeleton {
+  border-radius: var(--radius-xl);
+  background: linear-gradient(100deg, var(--color-mist) 30%, var(--color-sand) 50%, var(--color-mist) 70%);
+  background-size: 300% 100%;
+  animation: shimmer 1.5s infinite;
+}

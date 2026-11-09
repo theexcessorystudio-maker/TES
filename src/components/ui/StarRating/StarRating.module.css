@@ -1,0 +1,21 @@
+.stars {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.on {
+  color: var(--color-brass);
+}
+
+.off {
+  color: var(--color-sand-strong);
+}
+
+.input button {
+  padding: 2px;
+  transition: transform var(--duration-fast) var(--ease);
+}
+
+.input button:hover {
+  transform: scale(1.15);
+}

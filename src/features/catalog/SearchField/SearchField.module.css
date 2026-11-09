@@ -1,0 +1,27 @@
+.search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 10px 18px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-line);
+  background: var(--color-mist);
+  color: var(--color-mute);
+  transition:
+    box-shadow var(--duration-base) var(--ease),
+    border-color var(--duration-base) var(--ease);
+}
+
+.search:focus-within {
+  border-color: var(--color-aqua);
+  box-shadow: 0 0 0 3px var(--color-focus-ring);
+}
+
+.search input {
+  flex: 1;
+  min-width: 170px;
+  border: 0;
+  outline: 0;
+  background: none;
+  color: var(--color-ink);
+}

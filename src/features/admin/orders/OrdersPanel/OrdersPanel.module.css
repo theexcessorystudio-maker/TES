@@ -1,0 +1,50 @@
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.filters {
+  display: inline-flex;
+  gap: 2px;
+  padding: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--color-mist);
+  border: 1px solid var(--color-line);
+  overflow-x: auto;
+}
+
+.filter {
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  color: var(--color-teal);
+  white-space: nowrap;
+  transition: background var(--duration-fast), color var(--duration-fast);
+}
+
+.active {
+  background: var(--texture-teal);
+  color: var(--color-white);
+}
+
+.open {
+  min-width: 0;
+  text-align: left;
+}
+
+.total {
+  color: var(--color-teal);
+}
+
+.fulfilment {
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-line-strong);
+  background: var(--color-white);
+  color: var(--color-teal);
+  font-size: var(--text-sm);
+}

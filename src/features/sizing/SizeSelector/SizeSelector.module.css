@@ -1,0 +1,75 @@
+.selector {
+  border: 0;
+  display: grid;
+  gap: 10px;
+  margin: 6px 0 4px;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.legend {
+  float: left;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-teal);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.legend span {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--color-ink);
+}
+
+.guide {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13.5px;
+  color: var(--color-lagoon);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.option {
+  min-width: 46px;
+  height: 46px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-line-strong);
+  background: var(--color-white);
+  color: var(--color-teal);
+  font-weight: 500;
+  transition:
+    background var(--duration-fast),
+    border-color var(--duration-fast),
+    transform var(--duration-fast) var(--ease);
+}
+
+.option:hover {
+  border-color: var(--color-teal);
+  transform: translateY(-1px);
+}
+
+.selected {
+  background: var(--texture-teal);
+  border-color: var(--color-teal);
+  color: var(--color-white);
+}
+
+.error {
+  font-size: 13px;
+  color: var(--color-danger);
+}

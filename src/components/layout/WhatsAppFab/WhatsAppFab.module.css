@@ -1,0 +1,19 @@
+.fab {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: var(--z-fab);
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--color-whatsapp);
+  color: var(--color-white);
+  box-shadow: var(--shadow-lift), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transition: transform var(--duration-base) var(--ease);
+}
+
+.fab:hover {
+  transform: scale(1.08) translateY(-2px);
+}

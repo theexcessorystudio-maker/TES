@@ -1,0 +1,53 @@
+.totals {
+  display: grid;
+  gap: 8px;
+  font-size: var(--text-sm);
+  color: var(--color-mute);
+}
+
+.totals > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.totals dd {
+  color: var(--color-ink);
+}
+
+.savings {
+  padding: 9px 14px;
+  border-radius: 14px;
+  background: var(--color-sand);
+  color: var(--color-teal);
+}
+
+.savings dt {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.savings dd {
+  color: var(--color-aqua);
+  font-weight: 600;
+}
+
+.grand {
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 1px solid var(--color-line);
+}
+
+.grand dt {
+  font-size: var(--text-md);
+}
+
+.grand dd {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--color-teal);
+}

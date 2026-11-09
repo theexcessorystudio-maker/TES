@@ -1,0 +1,39 @@
+.tabs {
+  display: inline-flex;
+  gap: 2px;
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 5px;
+  margin-bottom: 34px;
+  border-radius: var(--radius-pill);
+  background: var(--color-mist);
+  border: 1px solid var(--color-line);
+}
+
+.tab {
+  position: relative;
+  padding: 9px 20px;
+  border-radius: var(--radius-pill);
+  color: var(--color-teal);
+  font-size: 15px;
+  white-space: nowrap;
+  transition: color var(--duration-base);
+}
+
+.active {
+  color: var(--color-white);
+  font-weight: 500;
+}
+
+.indicator {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-pill);
+  background: var(--texture-teal);
+  box-shadow: 0 8px 16px -8px rgba(2, 42, 48, 0.6);
+}
+
+.label {
+  position: relative;
+  z-index: 1;
+}

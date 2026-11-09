@@ -1,0 +1,10 @@
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+.page {
+  min-height: 60vh;
+  display: grid;
+  place-items: center;
+  color: var(--color-teal);
+}

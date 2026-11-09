@@ -1,0 +1,20 @@
+.page {
+  min-height: 80vh;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--space-3);
+  padding: 120px var(--gutter) var(--space-16);
+  text-align: center;
+}
+
+.page h1 {
+  font-family: var(--font-serif);
+  font-size: 44px;
+  color: var(--color-teal);
+}
+
+.page p {
+  margin-bottom: var(--space-3);
+  color: var(--color-mute);
+}

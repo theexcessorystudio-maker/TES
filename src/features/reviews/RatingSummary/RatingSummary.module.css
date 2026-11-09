@@ -1,0 +1,16 @@
+.summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-sm);
+  color: var(--color-mute);
+}
+
+button.summary:hover span {
+  text-decoration: underline;
+}
+
+.summary b {
+  color: var(--color-ink);
+  font-weight: 600;
+}

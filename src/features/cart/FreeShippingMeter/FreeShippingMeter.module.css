@@ -1,0 +1,31 @@
+.meter {
+  display: grid;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: var(--color-mist);
+  border: 1px solid var(--color-line);
+  font-size: 13.5px;
+  color: var(--color-teal);
+}
+
+.meter p {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.track {
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--color-sand);
+  overflow: hidden;
+}
+
+.track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--texture-teal);
+  transition: width var(--duration-slow) var(--ease);
+}

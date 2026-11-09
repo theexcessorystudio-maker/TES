@@ -1,0 +1,6 @@
+/* Global layer only. Order matters: tokens → reset → base → utilities. */
+@import './tokens.css';
+@import './reset.css';
+@import './base.css';
+@import './utilities.css';
+@import './print.css';

@@ -1,0 +1,31 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.header h1 {
+  font-family: var(--font-serif);
+  font-size: 44px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--color-teal);
+}
+
+.header h1::after {
+  content: '';
+  display: block;
+  width: 46px;
+  height: 4px;
+  margin-top: 12px;
+  border-radius: 4px;
+  background: var(--texture-teal);
+}
+
+.header p {
+  margin-top: var(--space-2);
+  color: var(--color-mute);
+}

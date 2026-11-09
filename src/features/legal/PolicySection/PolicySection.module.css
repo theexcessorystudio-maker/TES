@@ -1,0 +1,56 @@
+.section {
+  padding-block: var(--space-6);
+  border-top: 1px solid var(--color-line);
+  scroll-margin-top: var(--header-offset);
+}
+
+.section:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.title {
+  margin-bottom: var(--space-3);
+  font-family: var(--font-serif);
+  font-size: 27px;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--color-teal);
+}
+
+.prose {
+  display: grid;
+  gap: var(--space-3);
+  color: var(--color-ink);
+  font-size: var(--text-md);
+  line-height: 1.7;
+}
+
+.prose ul,
+.prose ol {
+  display: grid;
+  gap: var(--space-2);
+  padding-left: 1.25em;
+}
+
+.prose ul { list-style: disc; }
+.prose ol { list-style: decimal; }
+
+.prose li::marker {
+  color: var(--color-aqua);
+}
+
+.prose strong {
+  font-weight: 600;
+  color: var(--color-abyss);
+}
+
+.prose :where(p, li) a {
+  color: var(--color-lagoon);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose :where(p, li) a:hover {
+  color: var(--color-teal);
+}

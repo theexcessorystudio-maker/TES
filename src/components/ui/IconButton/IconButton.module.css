@@ -1,0 +1,45 @@
+.iconButton {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  display: grid;
+  place-items: center;
+  flex: none;
+  transition:
+    background var(--duration-base) var(--ease),
+    transform var(--duration-base) var(--ease);
+}
+
+.iconButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.plain {
+  color: var(--color-teal);
+}
+
+.plain:hover:not(:disabled) {
+  background: var(--color-sand);
+}
+
+.danger {
+  color: var(--color-danger);
+}
+
+.danger:hover:not(:disabled) {
+  background: var(--color-danger-soft);
+}
+
+.solid {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(3, 75, 84, 0.88);
+  color: var(--color-white);
+}
+
+.solid:hover:not(:disabled) {
+  background: var(--color-teal);
+  transform: scale(1.06);
+}

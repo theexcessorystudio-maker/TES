@@ -1,0 +1,59 @@
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2px;
+  padding: 3px;
+  border-radius: var(--radius-pill);
+  background: var(--color-sand);
+  box-shadow: inset 0 1px 3px rgba(3, 75, 84, 0.15);
+  --knob: 30px;
+}
+
+.stepper button {
+  width: var(--knob);
+  height: var(--knob);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--color-white);
+  color: var(--color-teal);
+  box-shadow: var(--shadow-knob);
+  transition: transform var(--duration-base) var(--ease);
+}
+
+.stepper button:hover:not(:disabled) {
+  transform: scale(1.08);
+}
+
+.stepper button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.stepper output {
+  min-width: 30px;
+  text-align: center;
+  font-weight: 500;
+  color: var(--color-teal);
+}
+
+.sm {
+  --knob: 28px;
+}
+
+.md {
+  --knob: 34px;
+}
+
+.lg {
+  --knob: 42px;
+}
+
+.lg output {
+  font-size: var(--text-lg);
+}
+
+.block {
+  width: 100%;
+}

@@ -1,0 +1,31 @@
+.section {
+  padding: var(--space-24) var(--gutter) var(--space-10);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+  margin-top: 30px;
+}
+
+.card {
+  display: grid;
+  gap: 10px;
+  padding: 26px;
+  border-radius: var(--radius-lg);
+  background: var(--color-white);
+  box-shadow: var(--shadow-rest);
+  transition:
+    transform var(--duration-slow) var(--ease),
+    box-shadow var(--duration-slow) var(--ease);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lift);
+}
+
+.card figcaption {
+  font-weight: 600;
+}
