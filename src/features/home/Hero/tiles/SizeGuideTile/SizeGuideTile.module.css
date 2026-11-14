@@ -1,0 +1,57 @@
+.button {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: 100%;
+  height: 100%;
+  padding: var(--space-6);
+  text-align: left;
+  color: inherit;
+}
+
+/* Concentric ring motif. */
+.tile::after {
+  content: '';
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  z-index: -1;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: repeating-radial-gradient(circle, transparent 0 12px, rgba(3, 75, 84, 0.07) 12px 14px);
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--color-sand);
+  color: var(--color-teal);
+}
+
+.title {
+  display: block;
+  margin-bottom: 4px;
+  font-family: var(--font-serif);
+  font-size: 23px;
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--color-teal);
+}
+
+.text {
+  font-size: var(--text-sm);
+  color: var(--color-mute);
+}
+
+.cta {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-lagoon);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}

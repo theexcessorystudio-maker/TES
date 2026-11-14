@@ -32,8 +32,9 @@ select {
   color: inherit;
 }
 
-ul[role='list'],
-ol[role='list'] {
+/* Lists are unstyled by default; long-form prose opts back in to bullets (see PolicySection). */
+ul,
+ol {
   list-style: none;
 }
 

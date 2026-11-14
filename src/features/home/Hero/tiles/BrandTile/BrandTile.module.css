@@ -1,0 +1,22 @@
+.tile {
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  min-height: 200px;
+  padding: var(--space-6);
+  text-align: center;
+  background: var(--texture-dots), var(--color-sand);
+}
+
+.tile img {
+  width: 96px;
+  border-radius: 50%;
+  box-shadow: var(--shadow-lift);
+}
+
+.tile p {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--color-teal);
+}

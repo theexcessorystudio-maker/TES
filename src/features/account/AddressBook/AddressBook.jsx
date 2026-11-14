@@ -41,7 +41,12 @@ export function AddressBook({ uid, addresses, loading }) {
       else await updateAddress(uid, editing.id, value)
       notify('Address saved')
       setEditing(null)
-    } catch { notify('Could not save the address', { tone: 'error' }) }
+    } catch (err) {
+      console.error('Saving address failed', err)
+      notify(err?.code === 'permission-denied'
+        ? 'Could not save the address: the database rejected it. Publish the latest firestore.rules in Firebase.'
+        : 'Could not save the address. Please try again.', { tone: 'error' })
+    }
   }
   const remove = async (a) => {
     if (!confirm('Remove this address?')) return

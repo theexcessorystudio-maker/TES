@@ -6,15 +6,16 @@ import { useProductViewer } from '../../../hooks/useProductViewer'
 import { ProductCard } from '../ProductCard/ProductCard'
 import { CategoryTabs } from '../CategoryTabs/CategoryTabs'
 import { SearchField } from '../SearchField/SearchField'
+import { useShopCategory } from '../useShopCategory'
 import styles from './ShopSection.module.css'
 
 export function ShopSection() {
   const { products, loading } = useCatalog()
   const { open } = useProductViewer()
-  const [category, setCategory] = useState('All')
   const [query, setQuery] = useState('')
 
   const categories = useMemo(() => ['All', ...new Set(products.map((p) => p.category).filter(Boolean))], [products])
+  const [category, setCategory] = useShopCategory(categories)
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase()
     return products.filter((p) => (category === 'All' || p.category === category) && p.name.toLowerCase().includes(q))

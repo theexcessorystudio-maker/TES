@@ -1,0 +1,85 @@
+.tile {
+  min-height: 200px;
+}
+
+/* Decorative ring outline. */
+.tile::after {
+  content: '';
+  position: absolute;
+  right: -46px;
+  bottom: -46px;
+  z-index: -1;
+  width: 170px;
+  height: 170px;
+  border: 18px solid rgba(194, 154, 85, 0.35);
+  border-radius: 50%;
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-3);
+  height: 100%;
+  padding: var(--space-6);
+  color: inherit;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.big {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  column-gap: 6px;
+  font-family: var(--font-serif);
+  font-size: clamp(52px, 5vw, 68px);
+  font-weight: 600;
+  line-height: 0.9;
+}
+
+.big small {
+  flex-basis: 100%;
+  margin-bottom: 4px;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.big em {
+  font-size: 0.42em;
+  font-style: normal;
+}
+
+.headline {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+.more svg {
+  transition: transform var(--duration-base) var(--ease);
+}
+
+.tile:hover .more svg {
+  transform: translateX(4px);
+}
