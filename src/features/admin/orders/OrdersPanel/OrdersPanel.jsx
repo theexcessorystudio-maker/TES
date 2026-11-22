@@ -33,7 +33,7 @@ export function OrdersPanel() {
   const visible = useMemo(() => {
     const test = FILTERS.find((f) => f.id === filter).test
     const q = query.trim().toLowerCase()
-    return orders.filter((o) => test(o) && `${o.orderId} ${o.customer.name} ${o.customer.phone} ${o.customer.email}`.toLowerCase().includes(q))
+    return orders.filter((o) => test(o) && `${o.orderId} ${o.customer.name} ${o.customer.phone} ${o.customer.email} ${o.awb || ''}`.toLowerCase().includes(q))
   }, [orders, filter, query])
   const open = openId && orders.find((o) => o.id === openId)
 
@@ -51,7 +51,7 @@ export function OrdersPanel() {
             <button key={f.id} type="button" role="tab" aria-selected={filter === f.id} className={cx(styles.filter, filter === f.id && styles.active)} onClick={() => setFilter(f.id)}>{f.label}</button>
           ))}
         </div>
-        <SearchField value={query} onChange={setQuery} placeholder="Search name, phone, email, ref…" />
+        <SearchField value={query} onChange={setQuery} placeholder="Search name, phone, email, ref, AWB…" />
       </div>
 
       {error ? <EmptyNote>Couldn’t load orders. Publish the updated <b>firestore.rules</b> (adds the admin-only <b>orders</b> collection), then refresh.</EmptyNote>
@@ -63,7 +63,7 @@ export function OrdersPanel() {
                 <DataRow key={o.id} layout="order">
                   <RowMedia src={imageUrl(o.items[0]?.image, 120)} onClick={() => setOpenId(o.id)} label={`Open ${shortRef(o.orderId)}`} />
                   <button type="button" className={styles.open} onClick={() => setOpenId(o.id)}>
-                    <RowTitle title={`${o.customer.name} · ${shortRef(o.orderId)}`} meta={`${formatDate(o.createdAt)} · ${itemCount(o)} item${itemCount(o) === 1 ? '' : 's'}${o.items.some((i) => i.size) ? ' · sized' : ''}`} />
+                    <RowTitle title={`${o.customer.name} · ${shortRef(o.orderId)}`} meta={`${formatDate(o.createdAt)} · ${itemCount(o)} item${itemCount(o) === 1 ? '' : 's'}${o.items.some((i) => i.size) ? ' · sized' : ''}${o.status === 'PAID' ? (o.awb ? ` · AWB ${o.awb}` : ' · no AWB yet') : ''}`} />
                   </button>
                   <b className={styles.total}>{formatMoney(o.total)}</b>
                   <Pill tone={PAYMENT_TONE[o.status]}>{PAYMENT_LABEL[o.status]}</Pill>

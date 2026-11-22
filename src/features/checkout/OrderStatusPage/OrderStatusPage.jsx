@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { CheckCircle2, Clock, MessageCircle, XCircle } from 'lucide-react'
+import { CheckCircle2, Clock, Copy, MessageCircle, Truck, XCircle } from 'lucide-react'
 import { Button, PageSpinner, Spinner } from '../../../components/ui'
 import { useAuth } from '../../../context/AuthContext'
 import { useCart } from '../../../context/cart/CartContext'
+import { useToast } from '../../../context/ToastContext'
 import { redirectToPayment } from '../../../lib/payments'
 import { imageUrl } from '../../../lib/cloudinary'
 import { formatMoney } from '../../../lib/format'
@@ -20,6 +21,36 @@ const VIEW = {
   PAID: { icon: CheckCircle2, tone: 'success', title: 'Thank you! Your order is confirmed.', text: 'We’ve received your payment and will start packing your pieces.' },
   PENDING: { icon: Clock, tone: 'warning', title: 'Payment not completed', text: 'Your order is saved but we haven’t received payment yet.' },
   FAILED: { icon: XCircle, tone: 'danger', title: 'Payment failed or expired', text: 'No money was taken. Your cart is still saved — please try again.' },
+}
+
+const SHIPMENT_TEXT = {
+  New: 'We’re getting your order ready.',
+  Packed: 'Your order is packed and will ship soon.',
+  Shipped: 'Your order is on its way.',
+  Delivered: 'Your order has been delivered.',
+  Cancelled: 'This order was cancelled.',
+}
+
+/** Shipping progress for a paid order, with the AWB number once the studio has added it. */
+function Shipment({ order }) {
+  const { notify } = useToast()
+  const copy = () => navigator.clipboard?.writeText(order.awb).then(() => notify('AWB number copied'), () => {})
+  return (
+    <div className={styles.shipment}>
+      <span className={styles.shipmentIcon}><Truck size={20} /></span>
+      <div>
+        <b>{order.fulfilment}</b> · {SHIPMENT_TEXT[order.fulfilment] || ''}
+        {order.awb ? (
+          <p className={styles.awb}>
+            AWB / tracking number <b>{order.awb}</b>
+            <button type="button" onClick={copy} aria-label="Copy AWB number"><Copy size={14} /></button>
+          </p>
+        ) : order.fulfilment !== 'Cancelled' && order.fulfilment !== 'Delivered' && (
+          <p className={styles.muted}>Your AWB (tracking) number will appear here once your order ships.</p>
+        )}
+      </div>
+    </div>
+  )
 }
 
 export default function OrderStatusPage() {
@@ -58,7 +89,13 @@ export default function OrderStatusPage() {
         </div>
         <h1 className={styles.title}>{settling ? 'Confirming your payment…' : view.title}</h1>
         <p className={styles.text}>{settling ? 'This usually takes a few seconds. Please don’t close this page.' : view.text}</p>
-        <p className={styles.reference}>Order reference <b>{order.orderId.split('-').slice(0, 2).join('-')}</b></p>
+        <p className={styles.reference}>Order ID <b>{order.orderId.split('-').slice(0, 2).join('-')}</b></p>
+        {order.status === 'PAID' && (
+          <>
+            <Shipment order={order} />
+            {!user && <p className={styles.muted}>Save your order ID. You can check this order anytime on <Link to="/track-order">Track order</Link> with your order ID and phone number.</p>}
+          </>
+        )}
 
         {!settling && order.status === 'PENDING' && order.paymentSessionId && <Button size="lg" onClick={retry} loading={retrying}>Complete payment</Button>}
         {!settling && order.status !== 'PAID' && <Button variant="outline" to="/checkout">Back to checkout</Button>}

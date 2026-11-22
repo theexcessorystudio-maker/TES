@@ -5,17 +5,16 @@
 import { SHIPPING } from '../../shared/commerce'
 
 export const POLICY = {
-  /** Delivery fee charged on every order (the same value checkout charges). */
+  /** Delivery fee charged below the free-shipping threshold (the same values checkout charges). */
   deliveryFee: SHIPPING.flatFee,
-  /** Charged for a replacement when the item arrived correct and undamaged. */
-  replacementFee: 100,
+  freeShippingAbove: SHIPPING.freeAbove,
   /** Damaged / wrong item claims must be raised within this window after delivery. */
-  claimWindowHours: 48,
-  dispatchTime: '1–3 business days',
-  deliveryTime: '4–8 business days',
+  claimWindowHours: 24,
+  dispatchTime: '24–48 hours',
+  deliveryTime: '3–7 business days',
   refundTime: '5–7 business days',
   shipsTo: 'all serviceable pincodes in India',
   /** Shown as “Last updated” on every policy page. */
-  lastUpdated: '2026-11-10',
+  lastUpdated: '2026-11-19',
   jurisdiction: 'India',
 }

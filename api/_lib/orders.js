@@ -146,11 +146,26 @@ export async function syncWithGateway(orderId) {
 /** What the browser is allowed to see about an order. */
 export function toPublicOrder(o) {
   return {
-    orderId: o.orderId, status: o.status, fulfilment: o.fulfilment,
+    orderId: o.orderId, status: o.status, fulfilment: o.fulfilment, awb: o.awb || null,
     customer: { name: o.customer.name, email: o.customer.email }, address: o.address,
     items: o.items, subtotal: o.subtotal, shipping: o.shipping, total: o.total,
     paymentSessionId: o.status === ORDER_STATUS.PENDING && o.gatewayActive ? o.paymentSessionId : null,
   }
+}
+
+/**
+ * Guest order lookup: the short order reference (TES-XXXXXX, shown on the order page) plus the
+ * phone number used at checkout. Both must match, so knowing one alone reveals nothing.
+ */
+export async function findGuestOrder(rawRef, rawPhone) {
+  const ref = String(rawRef ?? '').trim().toUpperCase().split('-').slice(0, 2).join('-')
+  const phone = String(rawPhone ?? '').replace(/\D/g, '').slice(-10)
+  const notFound = new HttpError(404, 'We couldn’t find an order with that order ID and phone number. Please check both and try again.')
+  if (!/^TES-[A-Z0-9]+$/.test(ref) || !PHONE_RE.test(phone)) throw notFound
+  const snap = await orders().where('customer.phone', '==', phone).get()
+  const match = snap.docs.map((d) => d.data()).find((o) => o.orderId.toUpperCase().startsWith(`${ref}-`))
+  if (!match) throw notFound
+  return match
 }
 
 /** Links paid guest orders to a newly signed-in account with the same verified email. */

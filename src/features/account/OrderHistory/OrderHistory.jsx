@@ -32,6 +32,7 @@ export function OrderHistory({ orders, loading }) {
             <div className={styles.info}>
               <b>{o.items.map((i) => i.name).join(', ')}</b>
               <span>{formatDate(o.createdAt)} · {o.items.reduce((n, i) => n + i.qty, 0)} item(s)</span>
+              {o.status === 'PAID' && o.awb && <span>AWB / tracking number: <b>{o.awb}</b></span>}
             </div>
             <div className={styles.status}>
               <Pill tone={PAYMENT_TONE[o.status]}>{PAYMENT_LABEL[o.status]}</Pill>

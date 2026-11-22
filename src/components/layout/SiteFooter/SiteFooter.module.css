@@ -1,12 +1,12 @@
 .footer {
-  background: var(--texture-teal);
+  background: var(--color-brand);
   color: var(--color-white);
   padding: var(--space-16) var(--gutter) var(--space-8);
 }
 
 .top {
   display: grid;
-  grid-template-columns: minmax(240px, 1.6fr) repeat(3, minmax(140px, 1fr));
+  grid-template-columns: minmax(220px, 1.4fr) repeat(4, minmax(140px, 1fr));
   gap: var(--space-10) var(--space-8);
   padding-bottom: var(--space-10);
   border-bottom: 1px solid rgba(255, 255, 255, 0.16);
@@ -26,7 +26,7 @@
 }
 
 .identity img {
-  width: 56px;
+  width: 72px;
   border-radius: 50%;
   box-shadow: var(--shadow-lift);
 }
@@ -138,9 +138,13 @@
   letter-spacing: 0.04em;
 }
 
-@media (max-width: 900px) {
-  .top { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 1060px) {
+  .top { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .brand { grid-column: 1 / -1; }
+}
+
+@media (max-width: 760px) {
+  .top { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 560px) {

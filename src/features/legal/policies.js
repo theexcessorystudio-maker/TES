@@ -1,38 +1,76 @@
 /**
- * Registry of store policy pages. Routes, the footer and the policy sidebar are all generated
- * from this list, so adding a page here is the only wiring needed (plus its content component
- * in ./content/index.js). Kept free of page content so the footer can import it cheaply.
+ * Registry of the store's info and policy pages. Routes, the footer and the page sidebar are all
+ * generated from this list, so adding a page here is the only wiring needed (plus its content
+ * component in ./content/index.js). Kept free of page content so the footer can import it cheaply.
+ * The order here is the order shown in the footer.
  */
 export const POLICY_GROUPS = {
+  about: 'About TES',
   help: 'Customer care',
   legal: 'Legal',
 }
 
 export const POLICIES = [
   {
-    slug: 'contact',
-    path: '/contact',
-    title: 'Contact Us',
-    navLabel: 'Contact us',
-    group: 'help',
-    summary: 'Real people, quick replies. Reach us about an order, a product or anything else.',
+    slug: 'about',
+    path: '/about',
+    title: 'About TES',
+    navLabel: 'About us',
+    group: 'about',
+    summary: 'For your everyday excess.',
+    dated: false,
+  },
+  {
+    slug: 'materials',
+    path: '/materials',
+    title: 'Materials We Use',
+    navLabel: 'Materials we use',
+    group: 'about',
+    summary: 'Every piece at TES is built to be worn on repeat. Here’s what goes into it.',
+    dated: false,
+  },
+  {
+    slug: 'care',
+    path: '/jewellery-care',
+    title: 'Jewellery Care',
+    navLabel: 'Jewellery care guide',
+    group: 'about',
+    summary: 'A little care keeps the shine going.',
+    dated: false,
+  },
+  {
+    slug: 'ring-size',
+    path: '/ring-size-guide',
+    title: 'Ring Size Guide',
+    navLabel: 'Ring size guide',
+    group: 'about',
+    summary: 'Find your fit before you order. We can’t offer size exchanges, so please check the chart first.',
     dated: false,
   },
   {
     slug: 'shipping',
     path: '/shipping-policy',
     title: 'Shipping Policy',
-    navLabel: 'Shipping & delivery',
+    navLabel: 'Shipping policy',
     group: 'help',
-    summary: 'How we pack, dispatch and deliver your order, and what it costs.',
+    summary: 'How we dispatch and deliver your order, and what it costs.',
   },
   {
     slug: 'returns',
     path: '/returns-policy',
-    title: 'Returns, Replacements & Refunds',
-    navLabel: 'Returns & replacements',
+    title: 'Refund and Cancellation Policy',
+    navLabel: 'Refund & cancellation policy',
     group: 'help',
-    summary: 'What to do if your order arrives damaged or isn’t what you ordered.',
+    summary: 'What to do if your order arrives damaged or is not what you ordered.',
+  },
+  {
+    slug: 'contact',
+    path: '/contact',
+    title: 'Contact Us',
+    navLabel: 'Contact us',
+    group: 'help',
+    summary: 'We are so happy you are here!',
+    dated: false,
   },
   {
     slug: 'privacy',

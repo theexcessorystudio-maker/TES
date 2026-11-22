@@ -1,65 +1,232 @@
+/* Intro on the left, visual on the right. */
 .hero {
-  position: relative;
-  /* Bottom padding leaves room for the TrustBar, which overlaps the hero by 62px. */
-  padding: 104px var(--gutter) calc(62px + var(--space-10));
-  background:
-    radial-gradient(ellipse 60% 50% at 85% 0%, rgba(31, 154, 163, 0.12), transparent 70%),
-    linear-gradient(var(--color-mist), var(--color-white));
-}
-
-/*
- * Desktop: 4 columns × 3 rows.
- *   intro intro feature spot
- *   intro intro feature offer
- *   cats  cats  size    secure
- */
-.grid {
   display: grid;
-  grid-template-columns: 1.2fr 1.2fr 1fr 1fr;
-  grid-template-rows: minmax(220px, 1fr) minmax(220px, 1fr) minmax(190px, auto);
-  grid-template-areas:
-    'intro intro feature spot'
-    'intro intro feature offer'
-    'cats  cats  size    secure';
-  gap: var(--space-4);
-  min-height: min(820px, calc(100svh - 120px));
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: clamp(40px, 6vw, 96px);
+  min-height: min(760px, calc(100svh - 132px));
+  padding: var(--space-12) var(--gutter);
+  background: var(--color-white);
 }
 
-.skeleton {
-  min-height: 200px;
-  border-radius: var(--radius-xl);
+/* Gentle staggered entrance; each element sets its own --delay. */
+.copy > * {
+  animation: rise 1s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s) both;
 }
 
-/* Tablet: 2 columns. */
-@media (max-width: 1000px) {
-  .grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: auto minmax(200px, auto) minmax(200px, auto) auto auto;
-    grid-template-areas:
-      'intro   intro'
-      'feature spot'
-      'feature offer'
-      'cats    cats'
-      'size    secure';
-    min-height: 0;
+.visual {
+  animation: fade 1.2s ease 0.2s both;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(16px); }
+}
+
+@keyframes fade {
+  from { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .copy > *,
+  .visual {
+    animation: none;
   }
 }
 
-/* Phone: the feature photo gets its own row; small tiles pair up. */
-@media (max-width: 600px) {
+.copy {
+  display: grid;
+  justify-items: start;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-mute);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.5;
+}
+
+.title {
+  margin-top: var(--space-6);
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(44px, 5.4vw, 84px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  text-wrap: balance;
+}
+
+.title em {
+  font-style: italic;
+  font-weight: 400;
+}
+
+.rule {
+  width: 44px;
+  height: 1px;
+  margin: var(--space-6) 0;
+  background: var(--color-line-strong);
+}
+
+.sub {
+  max-width: 50ch;
+  font-size: clamp(15px, 1.2vw, 17px);
+  line-height: 1.8;
+  color: var(--color-mute);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  margin-top: var(--space-10);
+}
+
+/* Square, quiet buttons: a solid ink block and an underlined text link. */
+.primary {
+  padding: 17px 38px;
+  background: var(--color-ink);
+  color: var(--color-white);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transition: background var(--duration-base) var(--ease);
+}
+
+.primary:hover {
+  background: #000;
+}
+
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--color-line-strong);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  transition: border-color var(--duration-base) var(--ease), gap var(--duration-base) var(--ease);
+}
+
+.secondary:hover {
+  border-color: var(--color-ink);
+  gap: 12px;
+}
+
+/* Visual */
+.cover {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  max-height: 680px;
+  object-fit: cover;
+}
+
+/* One tall photo, two stacked beside it. */
+.collage {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 14px;
+  height: clamp(420px, 44vw, 640px);
+}
+
+.tile {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-sand);
+}
+
+.tile:first-child {
+  grid-row: 1 / 3;
+}
+
+.tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tile:hover img {
+  transform: scale(1.04);
+}
+
+.tile[data-loading] {
+  animation: pulse 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  to { opacity: 0.55; }
+}
+
+/* Product name slides up on hover. */
+.caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 28px 16px 14px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.45));
+  color: var(--color-white);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-align: left;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity var(--duration-base) var(--ease), transform var(--duration-base) var(--ease);
+}
+
+.tile:hover .caption,
+.tile:focus-visible .caption {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 900px) {
   .hero {
-    padding-top: 96px;
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+    gap: var(--space-10);
+    padding: var(--space-12) 6vw;
   }
 
-  .grid {
-    gap: var(--space-3);
-    grid-template-rows: auto 340px minmax(190px, auto) auto auto auto;
-    grid-template-areas:
-      'intro   intro'
-      'feature feature'
-      'spot    offer'
-      'cats    cats'
-      'size    size'
-      'secure  secure';
+  .copy {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .eyebrow::after {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.5;
+  }
+
+  .actions {
+    justify-content: center;
+  }
+
+  .collage {
+    height: clamp(320px, 90vw, 520px);
+    gap: 10px;
   }
 }

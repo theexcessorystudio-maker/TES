@@ -2,13 +2,13 @@ import { Navigate } from 'react-router-dom'
 import { POLICY } from '../../../config/policies'
 import { formatDate } from '../../../lib/format'
 import { useDocumentTitle } from '../../../hooks/useDocumentTitle'
-import { policyBySlug } from '../policies'
+import { POLICY_GROUPS, policyBySlug } from '../policies'
 import { POLICY_CONTENT } from '../content'
 import { PolicyNav } from '../PolicyNav/PolicyNav'
 import { PolicyHelp } from '../PolicyHelp/PolicyHelp'
 import styles from './LegalPage.module.css'
 
-/** Shared shell for every store policy page: header, policy sidebar, content and help card. */
+/** Shared shell for every info and policy page: header, page sidebar, content and help card. */
 export default function LegalPage({ slug }) {
   const policy = policyBySlug(slug)
   const Content = POLICY_CONTENT[slug]
@@ -18,7 +18,7 @@ export default function LegalPage({ slug }) {
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <p className={styles.eyebrow}>Store policies</p>
+        <p className={styles.eyebrow}>{POLICY_GROUPS[policy.group]}</p>
         <h1 className={styles.title}>{policy.title}</h1>
         <p className={styles.summary}>{policy.summary}</p>
         {policy.dated !== false && <p className={styles.meta}>Last updated {formatDate(POLICY.lastUpdated)}</p>}

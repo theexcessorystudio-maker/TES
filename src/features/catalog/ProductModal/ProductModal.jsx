@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
-import { MessageCircle, ShieldCheck, ShoppingBag, Truck, Lock } from 'lucide-react'
+import { MessageCircle, ShoppingBag } from 'lucide-react'
 import { Button, Dialog, Price, QuantityStepper } from '../../../components/ui'
 import { useCart } from '../../../context/cart/CartContext'
 import { useToast } from '../../../context/ToastContext'
@@ -15,7 +16,14 @@ import { SizeGuideDialog } from '../../sizing/SizeGuideDialog/SizeGuideDialog'
 import { FrequentlyBoughtTogether } from '../../bundles/FrequentlyBoughtTogether/FrequentlyBoughtTogether'
 import { ProductReviews } from '../../reviews/ProductReviews/ProductReviews'
 import { RatingSummary } from '../../reviews/RatingSummary/RatingSummary'
+import { policyPath } from '../../legal/policies'
 import styles from './ProductModal.module.css'
+
+/** Shown on every product: true for the whole collection (see the Materials page). */
+const MATERIAL_POINTS = ['18k gold PVD plated', 'Stainless steel base', 'Tarnish-resistant', 'Hypoallergenic & skin-safe']
+
+/** Admin-pasted text can contain Unicode line/paragraph separators that browsers don't break on. */
+const cleanDescription = (text = '') => text.replace(/[\u2028\u2029]/g, '\n').replace(/\n{3,}/g, '\n\n').trim()
 
 export function ProductModal({ product, onClose }) {
   const { lines, add, setQty, qtyInCart, open: openCart } = useCart()
@@ -55,7 +63,16 @@ export function ProductModal({ product, onClose }) {
             <RatingSummary {...rating} onClick={() => reviewsRef.current?.scrollIntoView({ behavior: 'smooth' })} />
             <Price product={product} size="lg" />
             {isLowStock(product) && <span className={styles.low}>Only {stockOf(product)} left</span>}
-            {product.description && <p className={styles.description}>{product.description}</p>}
+            {cleanDescription(product.description) && <p className={styles.description}>{cleanDescription(product.description)}</p>}
+            <div className={styles.details}>
+              <p className={styles.detailsTitle}>Material &amp; care</p>
+              <ul>{MATERIAL_POINTS.map((m) => <li key={m}>{m}</li>)}</ul>
+              <p className={styles.detailsLinks}>
+                <Link to={policyPath('materials')} onClick={onClose}>Materials we use</Link>
+                <span aria-hidden="true">·</span>
+                <Link to={policyPath('care')} onClick={onClose}>Jewellery care</Link>
+              </p>
+            </div>
 
             {sized && !sold && (
               <div ref={sizeRef}>
@@ -64,11 +81,6 @@ export function ProductModal({ product, onClose }) {
               </div>
             )}
 
-            <ul className={styles.assurances} role="list">
-              <li><ShieldCheck size={16} /> Quality checked</li>
-              <li><Truck size={16} /> Careful packaging</li>
-              <li><Lock size={16} /> Secure checkout · UPI, cards, netbanking</li>
-            </ul>
 
             <div className={styles.actions}>
               {sold ? <Button block disabled>Sold out</Button> : line ? (

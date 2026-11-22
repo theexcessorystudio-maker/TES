@@ -11,6 +11,9 @@ export const createCheckout = ({ customer, address, items, note }) =>
 
 export const verifyOrder = (orderId) => apiPost('orders/verify', { orderId }).then((r) => r.order)
 
+/** Guest lookup with the short order reference + checkout phone number. Resolves to the public order. */
+export const lookupOrder = (orderRef, phone) => apiPost('orders/lookup', { orderRef, phone }).then((r) => r.order)
+
 export const claimGuestOrders = () => apiPost('account/claim')
 
 /** Customer's own orders. Sorted client-side to avoid needing a composite index. */
@@ -21,3 +24,11 @@ export const subscribeAllOrders = (onData, onError) =>
   onSnapshot(query(collection(db, 'orders'), orderBy('createdAt', 'desc')), (s) => onData(mapDocs(s)), onError)
 
 export const updateFulfilment = (orderId, fulfilment) => updateDoc(doc(db, 'orders', orderId), { fulfilment })
+
+/** Saves the courier AWB number. Adding one to an order that is still New/Packed also marks it Shipped. */
+export const updateAwb = (order, awb) => {
+  const value = awb.trim()
+  const patch = { awb: value }
+  if (value && ['New', 'Packed'].includes(order.fulfilment)) patch.fulfilment = 'Shipped'
+  return updateDoc(doc(db, 'orders', order.id), patch)
+}

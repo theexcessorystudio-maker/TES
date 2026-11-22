@@ -1,24 +1,45 @@
 import { Link } from 'react-router-dom'
-import { BadgeCheck, Clock, IndianRupee, Video } from 'lucide-react'
+import { BadgeCheck, Clock, Video } from 'lucide-react'
 import { POLICY } from '../../../config/policies'
-import { formatMoney } from '../../../lib/format'
+import { BUSINESS, INSTAGRAM_URL } from '../../../config/site'
 import { policyPath } from '../policies'
 import { PolicySection } from '../PolicySection/PolicySection'
 import { Callout } from '../Callout/Callout'
 import { KeyFacts } from '../KeyFacts/KeyFacts'
 
 export default function ReturnsPolicy() {
-  const fee = formatMoney(POLICY.replacementFee)
   const claimWindow = `${POLICY.claimWindowHours} hours`
 
   return (
     <>
       <KeyFacts items={[
         { icon: Video, title: '360° unboxing video required', text: 'One continuous video, from the sealed package to the product.' },
-        { icon: BadgeCheck, title: 'Free replacement', text: 'When an item arrives damaged or isn’t what you ordered.' },
-        { icon: Clock, title: `Report within ${claimWindow}`, text: 'Of delivery, with your order number and video.' },
-        { icon: IndianRupee, title: `${fee} for other replacements`, text: 'When the item arrived correct and undamaged.' },
+        { icon: BadgeCheck, title: 'Free replacement', text: 'When an item arrives damaged or is not what you ordered.' },
+        { icon: Clock, title: `Report within ${claimWindow}`, text: `Inform within ${claimWindow} of delivery with your order number and video.` },
       ]} />
+
+      <PolicySection id="all-orders-final" title="All orders are final">
+        <p>
+          Every piece is quality-checked before it leaves the studio. Since we curate in small batches, we ask you to shop with care. All orders are final, and we
+          don’t offer returns, refunds or size exchanges.
+        </p>
+        <p>Not sure about your ring size? Please check our <Link to={policyPath('ring-size')}>Ring Size Guide</Link> before you order.</p>
+      </PolicySection>
+
+      <PolicySection id="wrong-or-defective" title="Wrong or defective piece? We will replace it, free of charge.">
+        <p>
+          Message us on {INSTAGRAM_URL ? <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">Instagram</a> : 'Instagram'} or{' '}
+          {BUSINESS.email ? <a href={`mailto:${BUSINESS.email}`}>email</a> : 'email'} within <strong>{claimWindow} of delivery</strong> with:
+        </p>
+        <ul>
+          <li>your order details</li>
+          <li>a clear 360 degree uncut unboxing video showing the issue</li>
+          <li>a short note on what went wrong</li>
+        </ul>
+        <p>Once verified, we will arrange the pickup and send your replacement at no extra cost.</p>
+        <p>Sale items are final and non-exchangeable, unless wrong or defective.</p>
+        <Callout tone="info">Tip: please record your unboxing. It helps us resolve your concern faster.</Callout>
+      </PolicySection>
 
       <PolicySection id="eligibility" title="When we replace or refund">
         <p>Every piece is checked before it leaves the studio. We accept a return or replacement only if:</p>
@@ -30,7 +51,7 @@ export default function ReturnsPolicy() {
       </PolicySection>
 
       <PolicySection id="unboxing-video" title="The 360° unboxing video">
-        <Callout tone="warning" title="No unboxing video, no claim">
+        <Callout tone="warning" title="No unboxing video, no claim.">
           We can only accept a damage or wrong-item claim with a complete unboxing video. Please start recording <em>before</em> you open the parcel.
         </Callout>
         <p>For your video to be accepted, it must:</p>
@@ -40,7 +61,7 @@ export default function ReturnsPolicy() {
           <li>Show the package being opened on camera.</li>
           <li>Show the product clearly from all angles, including the damage or the mismatch with your order.</li>
         </ul>
-        <p>Please keep the product, its original packaging and any tags until your claim is resolved.</p>
+        <p>Please keep the product and its original packaging safe until your claim is resolved.</p>
       </PolicySection>
 
       <PolicySection id="how-to-claim" title="How to raise a claim">
@@ -50,17 +71,6 @@ export default function ReturnsPolicy() {
           <li>We review every claim within 2 business days and confirm the next steps.</li>
           <li>Once your claim is approved, we arrange the return of the item and send your replacement.</li>
         </ol>
-      </PolicySection>
-
-      <PolicySection id="charges" title="Replacement charges">
-        <ul>
-          <li><strong>Damaged or wrong item: free.</strong> Once your claim is approved, we cover the full cost of the return and the replacement delivery.</li>
-          <li>
-            <strong>Any other replacement: {fee}.</strong> If the item arrived correct and undamaged but you’d like a replacement (for example, a different ring size),
-            we may be able to help, depending on stock. A {fee} charge covers the return and re-delivery. The item must be unused and unworn, in its original packaging.
-          </li>
-        </ul>
-        <Callout tone="info">Not sure about your ring size? Check the size guide on any ring before ordering to avoid a chargeable replacement.</Callout>
       </PolicySection>
 
       <PolicySection id="refunds" title="Refunds">
@@ -75,11 +85,7 @@ export default function ReturnsPolicy() {
 
       <PolicySection id="cancellations" title="Cancellations">
         <ul>
-          <li><strong>Before dispatch:</strong> message us with your order number and we’ll cancel your order and refund it in full.</li>
-          <li><strong>After dispatch:</strong> orders can no longer be cancelled.</li>
-          <li>
-            If you refuse a delivery that isn’t damaged or wrong, we refund the order after it reaches us, minus the {formatMoney(POLICY.deliveryFee)} delivery fee.
-          </li>
+          <li>Orders cannot be cancelled once placed.</li>
         </ul>
       </PolicySection>
 

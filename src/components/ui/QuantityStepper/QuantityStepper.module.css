@@ -6,7 +6,7 @@
   padding: 3px;
   border-radius: var(--radius-pill);
   background: var(--color-sand);
-  box-shadow: inset 0 1px 3px rgba(3, 75, 84, 0.15);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.15);
   --knob: 30px;
 }
 

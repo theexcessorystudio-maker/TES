@@ -1,16 +1,17 @@
-import { Clock, Instagram, Mail, MapPin, MessageCircle } from 'lucide-react'
-import { BUSINESS, INSTAGRAM, WHATSAPP } from '../../../config/site'
+import { Instagram, Mail, MapPin, MessageCircle } from 'lucide-react'
+import { BUSINESS, INSTAGRAM, INSTAGRAM_URL, WHATSAPP } from '../../../config/site'
 import { waLink } from '../../../config/whatsapp'
 import styles from './ContactCards.module.css'
 
 /** Contact channels built from config/site.js — a channel without a value is simply not shown. */
 function channels() {
+  // Show Indian numbers as a local 10-digit number (8376974906), others with their country code.
+  const phone = /^91\d{10}$/.test(WHATSAPP) ? WHATSAPP.slice(2) : `+${WHATSAPP}`
   return [
-    WHATSAPP && { icon: MessageCircle, title: 'WhatsApp', value: `+${WHATSAPP}`, href: waLink(), note: 'Fastest way to reach us', external: true },
-    BUSINESS.email && { icon: Mail, title: 'Email', value: BUSINESS.email, href: `mailto:${BUSINESS.email}`, note: 'We reply within one business day' },
-    INSTAGRAM && { icon: Instagram, title: 'Instagram', value: `@${INSTAGRAM}`, href: `https://instagram.com/${INSTAGRAM}`, note: 'New drops and styling ideas', external: true },
+    BUSINESS.email && { icon: Mail, title: 'Email', value: BUSINESS.email, href: `mailto:${BUSINESS.email}` },
+    WHATSAPP && { icon: MessageCircle, title: 'WhatsApp', value: phone, href: waLink(), external: true },
+    INSTAGRAM && { icon: Instagram, title: 'Instagram', value: `@${INSTAGRAM}`, href: INSTAGRAM_URL, external: true },
     BUSINESS.address && { icon: MapPin, title: 'Registered address', value: BUSINESS.address },
-    { icon: Clock, title: 'Support hours', value: 'Mon – Sat, 10 am – 7 pm IST', note: 'Messages after hours are answered the next working day' },
   ].filter(Boolean)
 }
 

@@ -1,17 +1,16 @@
 import { Link } from 'react-router-dom'
-import { Instagram, Lock, MessageCircle } from 'lucide-react'
-import { BUSINESS, INSTAGRAM } from '../../../config/site'
+import { Instagram, Lock, Mail } from 'lucide-react'
+import { BUSINESS, INSTAGRAM_URL } from '../../../config/site'
 import { POLICY } from '../../../config/policies'
-import { waLink } from '../../../config/whatsapp'
 import { formatMoney } from '../../../lib/format'
 import { POLICIES, POLICY_GROUPS } from '../../../features/legal/policies'
 import styles from './SiteFooter.module.css'
 
 const SHOP_LINKS = [
   { to: '/#shop', label: 'Shop the collection' },
-  { to: '/#how', label: 'How it works' },
   { to: '/#faq', label: 'FAQs' },
-  { to: '/account', label: 'My orders' },
+  { to: '/track-order', label: 'Track order' },
+  { to: '/account', label: 'My account' },
 ]
 
 /** Link columns: a fixed “Shop” column plus one column per policy group from the registry. */
@@ -35,11 +34,11 @@ export function SiteFooter() {
             <b>{BUSINESS.name}</b>
           </div>
           <p className={styles.blurb}>
-            Curated accessories, quality checked and packed with care. {formatMoney(POLICY.deliveryFee)} flat delivery across India.
+            Demi-fine jewellery, made to last and made to love. Free shipping on orders above {formatMoney(POLICY.freeShippingAbove)}.
           </p>
           <div className={styles.social}>
-            <a href={waLink()} target="_blank" rel="noreferrer" aria-label="Message us on WhatsApp"><MessageCircle size={18} /></a>
-            {INSTAGRAM && <a href={`https://instagram.com/${INSTAGRAM}`} target="_blank" rel="noreferrer" aria-label="Instagram"><Instagram size={18} /></a>}
+            {INSTAGRAM_URL && <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" aria-label="Instagram"><Instagram size={18} /></a>}
+            {BUSINESS.email && <a href={`mailto:${BUSINESS.email}`} aria-label="Email us"><Mail size={18} /></a>}
           </div>
         </div>
 

@@ -22,10 +22,11 @@ service cloud.firestore {
     }
 
     // Orders are created and marked paid ONLY by the server (Firebase Admin SDK bypasses these rules).
-    // Customers can read their own; the admin can read all and update the fulfilment status.
+    // Customers can read their own; the admin can read all and update the fulfilment status and AWB number.
     match /orders/{orderId} {
       allow read: if isAdmin() || (request.auth != null && resource.data.uid == request.auth.uid);
-      allow update: if isAdmin() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['fulfilment']);
+      allow update: if isAdmin() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['fulfilment', 'awb'])
+        && (!('awb' in request.resource.data) || (request.resource.data.awb is string && request.resource.data.awb.size() <= 40));
       allow create, delete: if false;
     }
 

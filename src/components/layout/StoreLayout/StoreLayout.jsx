@@ -3,13 +3,13 @@ import { Outlet, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import { SiteHeader } from '../SiteHeader/SiteHeader'
 import { SiteFooter } from '../SiteFooter/SiteFooter'
-import { WhatsAppFab } from '../WhatsAppFab/WhatsAppFab'
 import { CartDrawer } from '../../../features/cart/CartDrawer/CartDrawer'
 import { ProductModal } from '../../../features/catalog/ProductModal/ProductModal'
 import { useCart } from '../../../context/cart/CartContext'
 import { useCatalog } from '../../../context/CatalogContext'
 import { useProductViewer } from '../../../hooks/useProductViewer'
-import { PageSpinner } from '../../ui'
+import { Marquee, PageSpinner } from '../../ui'
+import { MARQUEE_TOP } from '../../../config/site'
 
 /**
  * Scroll to #hash targets across routes (react-router does not do this by itself), and reset to the
@@ -39,12 +39,12 @@ export function StoreLayout() {
 
   return (
     <>
+      <Marquee items={MARQUEE_TOP} label="Store highlights" />
       <SiteHeader />
       {/* Suspend only the page, never the layout: if the layout suspended while the cart drawer was
           animating out (e.g. "Checkout" → lazy /checkout), the exit animation froze and the drawer stuck. */}
       <main><Suspense fallback={<PageSpinner />}><Outlet /></Suspense></main>
       <SiteFooter />
-      <WhatsAppFab />
       <AnimatePresence>{product && <ProductModal key={product.id} product={product} onClose={closeProduct} />}</AnimatePresence>
       <AnimatePresence>{isOpen && <CartDrawer onClose={close} />}</AnimatePresence>
     </>

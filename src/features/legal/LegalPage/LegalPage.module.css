@@ -1,6 +1,6 @@
 .page {
   min-height: 100vh;
-  padding: 120px var(--gutter) var(--space-24);
+  padding: var(--space-12) var(--gutter) var(--space-24);
   background: linear-gradient(var(--color-mist), var(--color-white) 420px);
 }
 

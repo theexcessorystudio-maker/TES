@@ -3,58 +3,79 @@ import { POLICY } from './policies'
 
 // Keep digits only: removes spaces, +, dashes, brackets
 export const WHATSAPP = (import.meta.env.VITE_WHATSAPP_NUMBER || '').replace(/\D/g, '')
-export const INSTAGRAM = import.meta.env.VITE_INSTAGRAM || ''
+/** Instagram handle, accepted as a handle ("theexcessorystudio", "@theexcessorystudio") or a full profile URL. */
+export const INSTAGRAM = (import.meta.env.VITE_INSTAGRAM || 'theexcessorystudio')
+  .trim().replace(/^https?:\/\/(www\.)?instagram\.com\//i, '').replace(/^@/, '').split(/[/?#]/)[0]
+export const INSTAGRAM_URL = INSTAGRAM ? `https://www.instagram.com/${INSTAGRAM}/` : ''
+/** ✏️ Invite link to the WhatsApp community (chat.whatsapp.com/…). Leave empty to hide the invite. */
+export const WHATSAPP_COMMUNITY = import.meta.env.VITE_WHATSAPP_COMMUNITY || ''
 export const CURRENCY = '₹'
 
 /** Emails allowed into /admin (comma separated). Must match the list in firestore.rules. */
 export const ADMIN_EMAILS = (import.meta.env.VITE_ADMIN_EMAILS || '')
   .split(',').map((e) => e.trim().toLowerCase()).filter(Boolean)
 
-export const TRUST = [
-  { icon: 'shield', title: 'Quality Checked', text: 'Every piece is inspected before it leaves the studio.' },
-  { icon: 'truck', title: 'Careful Delivery', text: 'Securely packed and shipped with tracking.' },
-  { icon: 'lock', title: 'Secure Checkout', text: 'Pay by UPI, card or netbanking. No account needed.' },
-  { icon: 'chat', title: 'Real Support', text: 'Questions about your order? Message us on WhatsApp.' },
-]
+/**
+ * ✏️ Big cover photo at the top of the home page. Drop the image into /public (e.g. public/cover.jpg)
+ * and set the path here. While empty, a plain placeholder is shown.
+ */
+export const COVER_IMAGE = ''
 
-export const STEPS = [
-  { n: '01', title: 'Pick your piece', text: 'Browse the collection and add what you love to your cart.' },
-  { n: '02', title: 'Check out securely', text: 'Pay as a guest or sign in with Google. UPI, cards and netbanking accepted.' },
-  { n: '03', title: 'Receive & review', text: 'We pack it with care and ship it to your door. Tell us what you think.' },
-]
+const freeShip = `Free shipping on orders above ${CURRENCY}${POLICY.freeShippingAbove}`
+
+/** ✏️ Scrolling label strips: one above the header, one between the cover and the shop. */
+export const MARQUEE_TOP = ['Demi-fine Jewellery', 'Made to Last, Made to Love', freeShip]
+export const MARQUEE_MIDDLE = ['Everyday Jewellery', '18k Gold Plated', 'Anti Tarnish', 'Water Resistant', 'Hypoallergenic', 'Premium Finish']
 
 // ✏️ Hand-picked testimonials shown on the home page (with permission): { name: 'Ananya', text: '...' }
 // Verified product reviews from customers appear on each product automatically.
 export const TESTIMONIALS = []
 
+/** Home page FAQ. `links` turn the named phrase into a link: { text, to }. */
 export const FAQ = [
-  { q: 'Do I need an account to order?', a: 'No. You can check out as a guest. Signing in with Google lets you save addresses, track orders and leave reviews.' },
-  { q: 'How can I pay?', a: 'We accept UPI, debit and credit cards, netbanking and wallets through our secure payment partner, Cashfree.' },
-  { q: 'How do I find my ring size?', a: 'Open any ring and tap “Size guide”. Measure the inside diameter of a ring you already wear and match it to the chart.' },
   {
-    q: 'How much is delivery and how long does it take?',
-    a: `Delivery is a flat ${CURRENCY}${POLICY.deliveryFee} on every order. Orders are dispatched within ${POLICY.dispatchTime} and usually arrive ${POLICY.deliveryTime} after dispatch.`,
+    q: 'Is your jewellery tarnish-resistant and hypoallergenic?',
+    a: 'Yes. Our pieces are 18k PVD gold-plated stainless steel, which makes them tarnish-resistant and gentle on sensitive skin, so they’re made for everyday wear. To keep them looking their best, avoid prolonged contact with harsh chemicals and perfume. Pearl pieces don’t love water, so keep those dry. For more on keeping your pieces looking their best, see our Jewellery Care page.',
+    link: { text: 'Jewellery Care page', to: '/jewellery-care' },
   },
   {
-    q: 'What if my order arrives damaged or wrong?',
-    a: `Message us within ${POLICY.claimWindowHours} hours of delivery with your order number and a continuous 360° unboxing video, starting from the sealed package. Approved claims get a free replacement. Without an unboxing video we can’t accept the claim. See our Returns & Replacement policy for details.`,
+    q: 'How do I care for my jewellery?',
+    a: 'Store pieces in a dry place, keep them away from perfumes and harsh chemicals and wipe gently with a soft cloth after use. For the full guide, see our Jewellery Care page.',
+    link: { text: 'Jewellery Care page', to: '/jewellery-care' },
   },
   {
-    q: 'Can I exchange for a different size?',
-    a: `If your item arrived correct and undamaged, we may be able to replace it with another size (subject to stock) for ${CURRENCY}${POLICY.replacementFee}. Please check the size guide before ordering.`,
+    q: 'How do I find my ring size?',
+    a: 'Open any ring and tap ‘Size guide’. Measure the inside diameter of a ring you already wear and match it to the chart. As we can’t offer size exchanges, please check the guide before ordering.',
+    link: { text: 'the guide', to: '/ring-size-guide' },
+  },
+  {
+    q: 'Do I need an account to order?',
+    a: 'No, you can check out as a guest. With an account, you can save addresses and track your orders from the My Account page.',
+    link: { text: 'My Account', to: '/account' },
+  },
+  {
+    q: 'How can I pay?',
+    a: 'We accept UPI, debit and credit cards, netbanking and wallets through our secure payment partner. All orders are prepaid, we don’t offer Cash on Delivery.',
+  },
+  {
+    q: 'How long does shipping take, and what does it cost?',
+    a: `Orders are dispatched within ${POLICY.dispatchTime} and delivered in ${POLICY.deliveryTime} across India, depending on your location. We will send you a tracking link as soon as your order ships. Shipping is a flat ${CURRENCY}${POLICY.deliveryFee} and free on orders above ${CURRENCY}${POLICY.freeShippingAbove}.\n\nIf you need it faster in Delhi NCR (Delhi, Noida, Gurgaon), message us on Instagram or WhatsApp us on ${WHATSAPP ? WHATSAPP.replace(/^91(?=\d{10}$)/, '') : 'WhatsApp'} and we will arrange express delivery.`,
+  },
+  {
+    q: 'Do you accept returns or exchanges?',
+    a: `We don’t accept returns or exchanges for change of mind. If your order arrives damaged, defective, or incorrect, message us within ${POLICY.claimWindowHours} hours of delivery and we’ll arrange an exchange. Please record a 360° unboxing video before opening the parcel and share it with your message.`,
   },
 ]
 
-// ✏️ Badge shown next to the price whenever a product's MRP is higher than its selling price.
-// A product can override it with its own "Offer label" in the admin panel.
-export const OFFER_LABEL = 'Launch offer'
+// ✏️ Name used for MRP savings in the cart and on invoices. (The storefront no longer shows offer badges or % off.)
+export const OFFER_LABEL = 'Offer'
 
 // ✏️ Your business details — printed on every invoice. Leave a field empty to hide it.
 export const BUSINESS = {
   name: 'The Excessory Studio',
   address: '',
   phone: WHATSAPP ? `+${WHATSAPP}` : '',
-  email: '',
+  email: 'theexcessorystudio@gmail.com',
   gstin: '',
 }
 export const INVOICE_PREFIX = 'TES'

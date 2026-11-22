@@ -30,7 +30,7 @@
   inset: 0;
   border-radius: var(--radius-pill);
   background: var(--texture-teal);
-  box-shadow: 0 8px 16px -8px rgba(2, 42, 48, 0.6);
+  box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.6);
 }
 
 .label {

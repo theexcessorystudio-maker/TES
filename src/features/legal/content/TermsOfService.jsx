@@ -12,7 +12,7 @@ export default function TermsOfService() {
         <p>
           These terms apply to your use of this website and to any order you place with {BUSINESS.name}. By using the website or placing an order, you agree to these
           terms, our <Link to={policyPath('privacy')}>Privacy Policy</Link>, our <Link to={policyPath('shipping')}>Shipping Policy</Link> and our{' '}
-          <Link to={policyPath('returns')}>Returns, Replacements &amp; Refunds</Link> policy.
+          <Link to={policyPath('returns')}>Refund and Cancellation</Link> policy.
         </p>
       </PolicySection>
 
@@ -26,7 +26,7 @@ export default function TermsOfService() {
 
       <PolicySection id="pricing" title="Prices and payment">
         <ul>
-          <li>Prices are in Indian Rupees (₹). A flat delivery fee of {formatMoney(POLICY.deliveryFee)} is added to every order and shown before you pay.</li>
+          <li>Prices are in Indian Rupees (₹). A flat delivery fee of {formatMoney(POLICY.deliveryFee)} is added to orders below {formatMoney(POLICY.freeShippingAbove)} (delivery is free above that) and shown before you pay.</li>
           <li>Prices and offers may change without notice. The price you see at checkout is the price you pay.</li>
           <li>Payments are processed securely by Cashfree Payments. Your order is confirmed only after your payment succeeds.</li>
           <li>If a product is listed at an obviously incorrect price because of an error, we may cancel the order and refund you in full.</li>

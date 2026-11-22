@@ -12,7 +12,7 @@
 
 .card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 0 0 1px rgba(3, 75, 84, 0.1), var(--shadow-lift);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), var(--shadow-lift);
 }
 
 .media {

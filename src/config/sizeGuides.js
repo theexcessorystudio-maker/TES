@@ -22,7 +22,7 @@ export const SIZE_GUIDES = {
       { diameter: '20.68', circumference: '64.94', size: '11' },
       { diameter: '21.49', circumference: '67.51', size: '12' },
     ],
-    tips: ['Measure at the end of the day, when fingers are largest.', 'Between two sizes? Choose the larger one.'],
+    tips: ['If you are in between sizes, we recommend you sizing up.'],
     downloadUrl: '/size-guides/ring-size-guide.pdf',
   },
 }

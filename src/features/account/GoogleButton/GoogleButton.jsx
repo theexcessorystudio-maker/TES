@@ -35,7 +35,7 @@ export function GoogleButton({ compact, label = 'Continue with Google', onSigned
   return (
     <button type="button" className={cx(styles.google, compact && styles.compact, className)} onClick={signIn} disabled={busy}>
       {busy ? <Spinner size={16} /> : <GoogleMark />}
-      <span>{compact ? 'Sign in' : label}</span>
+      <span>{compact ? 'Login' : label}</span>
     </button>
   )
 }

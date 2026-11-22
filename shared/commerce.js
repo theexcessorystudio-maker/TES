@@ -10,7 +10,7 @@ export const MAX_QTY_PER_LINE = 10
  * ✏️ Shipping policy. `flatFee` is charged when the subtotal is below `freeAbove`.
  * Set `flatFee: 0` for always-free shipping. Set `freeAbove: 0` to always charge the fee.
  */
-export const SHIPPING = { flatFee: 100, freeAbove: 0 }
+export const SHIPPING = { flatFee: 80, freeAbove: 999 }
 
 export function shippingFor(subtotal) {
   if (!SHIPPING.flatFee) return 0

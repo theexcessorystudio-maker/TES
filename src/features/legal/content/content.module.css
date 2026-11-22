@@ -1,0 +1,47 @@
+/* Shared bits for the info pages' content. */
+.signoff {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-style: italic;
+  color: var(--color-ink);
+}
+
+.signature {
+  display: grid;
+  gap: 2px;
+}
+
+.signature b {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  color: var(--color-ink);
+}
+
+.signature span {
+  color: var(--color-mute);
+}
+
+.tableWrap {
+  overflow-x: auto;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  text-align: center;
+}
+
+.table th {
+  padding: 12px 14px;
+  background: var(--color-sand);
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.table td {
+  padding: 11px 14px;
+  border-top: 1px solid var(--color-line);
+}

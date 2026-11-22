@@ -9,6 +9,7 @@ import { POLICIES } from '../features/legal/policies'
 // Route-level code splitting: shoppers never download the admin bundle.
 const CheckoutPage = lazy(() => import('../features/checkout/CheckoutPage/CheckoutPage'))
 const OrderStatusPage = lazy(() => import('../features/checkout/OrderStatusPage/OrderStatusPage'))
+const TrackOrderPage = lazy(() => import('../features/checkout/TrackOrderPage/TrackOrderPage'))
 const AccountPage = lazy(() => import('../features/account/AccountPage/AccountPage'))
 const AdminPage = lazy(() => import('../features/admin/AdminPage/AdminPage'))
 const LegalPage = lazy(() => import('../features/legal/LegalPage/LegalPage'))
@@ -24,6 +25,7 @@ export function App() {
               <Route index element={<HomePage />} />
               <Route path="checkout" element={<CheckoutPage />} />
               <Route path="order/:orderId" element={<OrderStatusPage />} />
+              <Route path="track-order" element={<TrackOrderPage />} />
               <Route path="account" element={<AccountPage />} />
               {POLICIES.map((p) => <Route key={p.slug} path={p.path.slice(1)} element={<LegalPage slug={p.slug} />} />)}
               <Route path="*" element={<NotFoundPage />} />

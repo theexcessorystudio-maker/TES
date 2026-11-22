@@ -23,7 +23,7 @@ const toDocument = (f) => {
   const stock = Math.max(0, parseInt(f.stock, 10) || 0)
   return {
     name: f.name.trim(), price: Number(f.price), oldPrice: f.oldPrice ? Number(f.oldPrice) : 0, offerLabel: f.offerLabel.trim(),
-    category: f.category.trim(), description: f.description.trim(), images: f.images, stock, inStock: stock > 0,
+    category: f.category.trim(), description: f.description.replace(/[\u2028\u2029]/g, '\n').trim(), images: f.images, stock, inStock: stock > 0,
     sizes: f.sizes, sizeGuide: f.sizes.length ? f.sizeGuide : '', pairsWith: f.pairsWith,
   }
 }
@@ -69,7 +69,7 @@ export function ProductEditor({ initial, products, onClose }) {
       <Field label="Offer label" hint="(shown when MRP is higher than the price)" placeholder={OFFER_LABEL} {...bind('offerLabel')} />
       <Field label="Category" required list="product-categories" placeholder="Earrings, Rings, Bags…" value={form.category} onChange={(e) => setCategory(e.target.value)} />
       <datalist id="product-categories">{PRODUCT_CATEGORIES.map((c) => <option key={c} value={c} />)}</datalist>
-      <Field as="textarea" label="Description" rows={4} placeholder="Material, size, care…" {...bind('description')} />
+      <Field as="textarea" label="Description" rows={10} placeholder="Material, size, care… (press Enter for a new line)" {...bind('description')} />
       <Field label="Stock quantity" hint="(total across all sizes · 0 marks it sold out)" required type="number" min="0" step="1" placeholder="e.g. 12" {...bind('stock')} />
 
       <SizeOptionsField sizes={form.sizes} sizeGuide={form.sizeGuide} onChange={set} />

@@ -4,7 +4,7 @@
   place-content: center;
   justify-items: center;
   gap: var(--space-3);
-  padding: 120px var(--gutter) var(--space-16);
+  padding: var(--space-12) var(--gutter) var(--space-16);
   text-align: center;
 }
 

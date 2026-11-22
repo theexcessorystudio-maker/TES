@@ -9,7 +9,7 @@
 }
 
 .text-highlight {
-  background: linear-gradient(transparent 60%, rgba(31, 154, 163, 0.22) 60% 90%, transparent 90%);
+  background: linear-gradient(transparent 60%, rgba(0, 0, 0, 0.08) 60% 90%, transparent 90%);
 }
 
 @keyframes spin {
